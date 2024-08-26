@@ -14,6 +14,11 @@ The DB Gradient Text Block
 == Description ==
 [DB Gradient Text Block] DB Gradient Text Block for Gutenberg supported block.
 
+## 👨‍💻 DOCUMENTATION AND SUPPORT ##
+
+- To report issue and contribution visit [Github](https://github.com/dhimanbarua/db-gradient-text-block).
+- If you have any more questions, visit our support on the [Plugin's Forum](https://wordpress.org/support/plugin/db-gradient-text-block/).
+
 
 **Blocks:**
 * **Gradient Text**: A normal heading and title block .
