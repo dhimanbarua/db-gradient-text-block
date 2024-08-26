@@ -19,27 +19,19 @@
 		"extends": "@wordpress/stylelint-config/scss"
 	},
 	"scripts": {
-		"start": "wp-scripts start",
-		"gulpzip": "gulp zip",
-		"clean": "gulp cleanjsx",
-		"minify": "gulp assets",
+		"build": "wp-scripts build",
+		"format": "wp-scripts format",
 		"lint:css": "wp-scripts lint-style",
-		"lint:js:src": "wp-scripts lint-js ./src",
+		"lint:js": "wp-scripts lint-js",
 		"packages-update": "wp-scripts packages-update",
-		"finalbuild": "wp-scripts build",
-		"finalbuildzip": "yarn finalbuild && yarn gulpzip",
-		"zip": "wp-scripts plugin-zip",
-		"eject": "wp-scripts eject"
+		"plugin-zip": "wp-scripts plugin-zip",
+		"start": "wp-scripts start"
 	},
 	"devDependencies": {
 		"@wordpress/eslint-plugin": "^13.2.0",
 		"@wordpress/prettier-config": "^2.1.0",
 		"@wordpress/scripts": "^26.12.0",
 		"@wordpress/stylelint-config": "^21.1.0",
-		"eslint-config-prettier": "^8.3.0",
-		"gulp": "^5.0.0",
-		"gulp-remove-logging": "^1.2.0",
-		"gulp-uglify": "^3.0.2",
-		"gulp-zip": "5.1.0"
+		"eslint-config-prettier": "^8.3.0"
 	}
 }

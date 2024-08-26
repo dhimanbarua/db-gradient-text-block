@@ -1,0 +1,16 @@
+{
+  "apiVersion": 2,
+  "name": "dbgradienttextblock/db-gradient-text",
+  "version": "0.1.0",
+  "title": "Gradient Text",
+  "category": "dbgradienttextblock",
+  "description": "Create gradient text with title",
+  "supports": {
+    "html": false,
+    "anchor": true
+  },
+  "textdomain": "db-gradient-text-block",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css"
+}
