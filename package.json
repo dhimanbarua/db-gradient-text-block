@@ -1,0 +1,45 @@
+{
+	"name": "db-gradient-text-block",
+	"version": "1.0.0",
+	"description": "Gradient Text Block for Gutenberg supported block",
+	"author": "Dhiman Barua",
+	"license": "GPL-2.0-or-later",
+	"main": "build/blocks/index.js",
+	"keywords": [
+		"wordpress",
+		"gutenberg",
+		"blocks",
+		"gutenberg blocks development",
+		"wordpress gutenberg blocks development",
+		"wordpress gutenberg blocks",
+		"wordpress gutenberg blocks development boilerplate"
+	],
+	"prettier": "@wordpress/prettier-config",
+	"stylelint": {
+		"extends": "@wordpress/stylelint-config/scss"
+	},
+	"scripts": {
+		"start": "wp-scripts start",
+		"gulpzip": "gulp zip",
+		"clean": "gulp cleanjsx",
+		"minify": "gulp assets",
+		"lint:css": "wp-scripts lint-style",
+		"lint:js:src": "wp-scripts lint-js ./src",
+		"packages-update": "wp-scripts packages-update",
+		"finalbuild": "wp-scripts build",
+		"finalbuildzip": "yarn finalbuild && yarn gulpzip",
+		"zip": "wp-scripts plugin-zip",
+		"eject": "wp-scripts eject"
+	},
+	"devDependencies": {
+		"@wordpress/eslint-plugin": "^13.2.0",
+		"@wordpress/prettier-config": "^2.1.0",
+		"@wordpress/scripts": "^26.12.0",
+		"@wordpress/stylelint-config": "^21.1.0",
+		"eslint-config-prettier": "^8.3.0",
+		"gulp": "^5.0.0",
+		"gulp-remove-logging": "^1.2.0",
+		"gulp-uglify": "^3.0.2",
+		"gulp-zip": "5.1.0"
+	}
+}
