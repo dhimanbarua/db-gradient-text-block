@@ -20,6 +20,7 @@ import {
 	PanelBody,
 	RangeControl,
 	TabPanel,
+	ToggleControl, 
 } from '@wordpress/components';
 import { useState } from "@wordpress/element";
 import { __ } from '@wordpress/i18n';
@@ -37,7 +38,7 @@ const Inspector = ({ attributes, setAttributes }) => {
 		textColor,
 		textBodyBg,
 		textBodyGradient,
-		fontSize,
+		textFontSize,
 		textDecoration,
 		textTransform,
 		letterSpacing,
@@ -46,6 +47,7 @@ const Inspector = ({ attributes, setAttributes }) => {
 		gtbMargin,
 		gtbBorder,
 		gtbBorderRadius,
+		showTextReveal,
 	} = attributes;
 
 	
@@ -137,8 +139,8 @@ const Inspector = ({ attributes, setAttributes }) => {
 											id="gtb-font-decoration"
 										>
 											<FontSizePicker
-												value={fontSize}
-												onChange={(value) => setAttributes({fontSize:value})}
+												value={textFontSize}
+												onChange={(value) => setAttributes({textFontSize:value})}
 												__nextHasNoMarginBottom
 											/>
 											<TextDecorationControl
@@ -261,6 +263,77 @@ const Inspector = ({ attributes, setAttributes }) => {
 												))}
 											</ButtonGroup>
 										</BaseControl>
+										{colorSwitcher === "color" && (
+											<ColorPalette
+												colors={[
+													{name: "red", color: "#f00"},
+													{name: "white", color: "#FFF"},
+													{name: "blue", color: "#00f"},
+												]}
+												value={textColor}
+												onChange={(value) => setAttributes({textColor: value})}
+											/>
+										)}
+										{colorSwitcher === "gradient" && (
+											<GradientPicker
+												value={textGradient}
+												onChange={(value) => setAttributes({ textGradient: value })}
+												gradients={ [
+													{
+														name: 'JShine',
+														gradient:
+															'linear-gradient(135deg,#12c2e9 0%,#c471ed 50%,#f64f59 100%)',
+														slug: 'jshine',
+													},
+													{
+														name: 'Moonlit Asteroid',
+														gradient:
+															'linear-gradient(135deg,#0F2027 0%, #203A43 0%, #2c5364 100%)',
+														slug: 'moonlit-asteroid',
+													},
+													{
+														name: 'Rastafarie',
+														gradient:
+															'linear-gradient(135deg,#1E9600 0%, #FFF200 0%, #FF0000 100%)',
+														slug: 'rastafari',
+													},
+												] }
+											/>
+										)}
+									</PanelBody>
+									<PanelBody
+										title={__("Reveal Effect", "db-gradient-text-block")}
+										initialOpen={false}
+									>
+										<ToggleControl
+											label={__("Show Text Reveal", "db-gradient-text-block")}
+											checked={showTextReveal}
+											onChange={(nextValues) => setAttributes({showTextReveal: nextValues})}
+										/>
+																			
+										<BaseControl>
+										<ButtonGroup>
+											{[
+												{
+													label: __("Color", "db-gradient-text-block"),
+													value: "color",
+												},
+												{
+													label: __("Gradient", "db-gradient-text-block"),
+													value: "gradient",
+												}
+											].map(({ value, label }, index) => (
+												<Button
+													key={index}
+													isPrimary={colorSwitcher === value}
+													isSecondar={colorSwitcher !== value}
+													onClick={() => setColorSwitcher(value)}
+												>
+													{label}
+												</Button>
+											))}
+										</ButtonGroup>
+									</BaseControl>
 										{colorSwitcher === "color" && (
 											<ColorPalette
 												colors={[

@@ -28,6 +28,7 @@ if( ! class_exists( 'Dbgtb_Block' ) ) {
 		public function __construct() {
 			$this->define_constants();
 			$this->includes();
+			$this->assets_manager();
 		}
 
 		/**
@@ -47,6 +48,24 @@ if( ! class_exists( 'Dbgtb_Block' ) ) {
 		 */
 		public function includes() {
 			require_once __DIR__ . '/inc/loader.php';
+		}
+
+		/**
+		 * Include all the required files
+		 * @return void
+		 */
+		public function assets_manager() {
+			
+			function dbgtb_block_enqueue_scripts() {
+				wp_enqueue_script( 'dbgtb_wow', DBGTB_URL . "assets/js/wow.min.js", array( 'jquery' ), '1.0.0', false );
+				wp_enqueue_script( 'dbgtb_wow_activation', DBGTB_URL . "assets/js/wow-activation.js", array( 'jquery' ), '1.0.0', false );
+			}
+			add_action( 'wp_enqueue_scripts', 'dbgtb_block_enqueue_scripts' );
+			function dbgtb_block_admin_enqueue_scripts() {
+				wp_enqueue_script( 'dbgtb_wow', DBGTB_URL . "assets/js/wow.min.js", array( 'jquery' ), '1.0.0', false );
+				wp_enqueue_script( 'dbgtb_wow_activation', DBGTB_URL . "assets/js/wow-activation.js", array( 'jquery' ), '1.0.0', false );
+			}
+			add_action( 'admin_enqueue_scripts', 'dbgtb_block_admin_enqueue_scripts' );
 		}
 
 		/**

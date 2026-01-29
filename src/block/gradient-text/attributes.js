@@ -31,6 +31,9 @@ const attributes = {
 		type: "string",
 		default: "linear-gradient(135deg,rgba(6,147,227,1) 0%,rgb(155,81,224) 100%)"
 	},
+	textFontSize: {
+		type: "string",
+	},
 	textDecoration: {
 		type: "string",
 	},
@@ -43,13 +46,17 @@ const attributes = {
 	lineHeight: {
 		type: "string",
 	},
+	showTextReveal: {
+		type: "boolean",
+		default: true,
+	},
 	gtbPadding: {
 		type: "object",
 		default: {
-			top:"0px",
-			right:"0px",
-			bottom:"0px",
-			left:"0px",
+			top:"16px",
+			right:"16px",
+			bottom:"16px",
+			left:"16px",
 		}
 	},
 	gtbMargin: {

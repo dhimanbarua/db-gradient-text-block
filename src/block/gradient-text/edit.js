@@ -28,7 +28,7 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 		textGradient,
 		textBodyBg,
 		textBodyGradient,
-		fontSize,
+		textFontSize,
 		textDecoration,
 		textTransform,
 		letterSpacing,
@@ -37,9 +37,10 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 		gtbMargin,
 		gtbBorder,
 		gtbBorderRadius,
+		showTextReveal,
 	} = attributes;
 
-	console.log(gtbBorderRadius);
+	
 
 	// Unique ID
 	useEffect(() => {
@@ -70,7 +71,7 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 		text-decoration: ${textDecoration};
 	}
 		.${uniqueId} ${headingTag}.gtb-gradient-text{
-			font-size: ${fontSize};
+			font-size: ${textFontSize};
 			text-decoration: ${textDecoration};
 			text-transform: ${textTransform};
 			letter-spacing: ${letterSpacing};
@@ -108,12 +109,15 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 		}
 	}, [attributes]);
 
+	// Text Reveal Effect
+	const textRevealEffect = showTextReveal ? 'wow gtb-reveal' : '';
+
 	return (
 		<Fragment>
 			<style>{`${softMinifyCssStrings(blockStyleCss)}`}</style>
 			<Inspector attributes={attributes} setAttributes={setAttributes} />
 			<div {...blockProps}>
-				<div className="gtb-gradient-text-wrraper">
+				<div className={`gtb-gradient-text-wrraper ${textRevealEffect}`}>
 					<RichText
 						className='gtb-gradient-text'
 						tagName={headingTag}
