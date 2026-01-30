@@ -50,6 +50,29 @@ const attributes = {
 		type: "boolean",
 		default: true,
 	},
+	textRevealBg: {
+		type: "string",
+	},
+	textRevealGradient: {
+		type: "string",
+		default: "linear-gradient(135deg,rgba(6,147,227,1) 0%,rgb(155,81,224) 100%)"
+	},
+	textRevealDelay: {
+		type: "number",
+		default: 0,
+	},
+	textRevealDuration: {
+		type: "number",
+		default: 1,
+	},
+	showHoverEffect: {
+		type: "boolean",
+		default: false,
+	},
+	hoverEffect: {
+		type: "string",
+		default: "none",
+	},
 	gtbPadding: {
 		type: "object",
 		default: {
@@ -71,9 +94,9 @@ const attributes = {
 	gtbBorder: {
 		type: "object",
 		default: {
-			color: "#000000",
+			color: "transparent",
 			style: "solid",
-			width: "1",
+			width: "0",
 		}
 	},
 	gtbBorderRadius: {

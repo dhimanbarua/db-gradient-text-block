@@ -20,7 +20,8 @@
 }
 
 .gtb-reveal>* {
-    animation-duration: 1s;
+    animation-duration: var(--reveal-duration, 1s);
+    animation-delay: var(--reveal-delay, 0s);
     animation-fill-mode: forwards;
     animation-timing-function: cubic-bezier(.075,.135,.135,.15,.86);
     position: relative;
@@ -39,7 +40,8 @@
 }
 
 .gtb-reveal:after {
-    animation-duration: 1s;
+    animation-duration: var(--reveal-duration, 1s);
+    animation-delay: var(--reveal-delay, 0s);
     animation-fill-mode: forwards;
     animation-timing-function: cubic-bezier(.075,.135,.135,.15,.86);
     content: "";
@@ -51,8 +53,7 @@
     transform: scale(.05,0);
     transform-origin: left top;
     width: 100%;
-	background-color: #615EFC;
-	z-index: 1;
+    z-index: 1;
 }
 
 .gtb-reveal.animated:after {

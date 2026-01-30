@@ -38,6 +38,14 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 		gtbBorder,
 		gtbBorderRadius,
 		showTextReveal,
+		textRevealBg,
+		textRevealGradient,
+		textRevealDelay,
+		textRevealDuration,
+		showHoverEffect,
+		hoverEffect,
+		showVerticalText,
+		verticalTextPosition,
 	} = attributes;
 
 	
@@ -60,16 +68,17 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 	 * Block Styles
 	 */
 	const deskStyles = `
-	.${uniqueId} .gtb-gradient-text-wrraper{
-		${textBodyGradient ? `background-image: ${textBodyGradient};` : ''}
-		${textBodyBg ? `background: ${textBodyBg};` : ''}
-		padding: ${gtbPadding.top} ${gtbPadding.right} ${gtbPadding.bottom} ${gtbPadding.left};
-		margin: ${gtbMargin.top} ${gtbMargin.right} ${gtbMargin.bottom} ${gtbMargin.left};
-		border: ${gtbBorder.width} ${gtbBorder.style} ${gtbBorder.color};
-		border-radius: ${gtbBorderRadius}px;
-		text-align: ${headingAlign};
-		text-decoration: ${textDecoration};
-	}
+		.${uniqueId} .gtb-gradient-text-wrraper{
+			${textBodyGradient ? `background-image: ${textBodyGradient};` : ''}
+			${textBodyBg ? `background: ${textBodyBg};` : ''}
+			padding: ${gtbPadding.top} ${gtbPadding.right} ${gtbPadding.bottom} ${gtbPadding.left};
+			margin: ${gtbMargin.top} ${gtbMargin.right} ${gtbMargin.bottom} ${gtbMargin.left};
+			border: ${gtbBorder.width} ${gtbBorder.style} ${gtbBorder.color};
+			border-radius: ${gtbBorderRadius}px;
+			text-align: ${headingAlign};
+			text-decoration: ${textDecoration};
+			line-height: normal;
+		}
 		.${uniqueId} ${headingTag}.gtb-gradient-text{
 			font-size: ${textFontSize};
 			text-decoration: ${textDecoration};
@@ -79,10 +88,20 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 			color: ${textColor};
 			background: ${textGradient};
 			${textGradient ? `-webkit-background-clip: text;-webkit-text-fill-color: transparent;` : ''}};
-			
+			${showVerticalText && verticalTextPosition === 'top-to-bottom' ? `writing-mode: vertical-rl; text-orientation: mixed;` : ''}
+			${showVerticalText && verticalTextPosition === 'bottom-to-top' ? `writing-mode: vertical-rl; text-orientation: mixed; transform: rotate(180deg);` : ''}
 		}
 		.${uniqueId} span.gtb-gradient-text{
 			display: block;
+		}
+		.${uniqueId} .gtb-reveal.gtb-gradient-text-wrraper::after{
+			${textRevealGradient ? `background: ${textRevealGradient};` : ''}
+			${textRevealBg ? `background: ${textRevealBg};` : ''}
+			animation-delay: ${textRevealDelay}s;
+			animation-duration: ${textRevealDuration}s;
+		}
+		.${uniqueId} .gtb-reveal.animated > *{
+			animation-delay: ${textRevealDelay}s;
 		}
 
 	`;
@@ -111,13 +130,13 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 
 	// Text Reveal Effect
 	const textRevealEffect = showTextReveal ? 'wow gtb-reveal' : '';
-
+	const hoverEffectClass = showHoverEffect ? `gtb-hvr-${hoverEffect}` : '';
 	return (
 		<Fragment>
 			<style>{`${softMinifyCssStrings(blockStyleCss)}`}</style>
 			<Inspector attributes={attributes} setAttributes={setAttributes} />
 			<div {...blockProps}>
-				<div className={`gtb-gradient-text-wrraper ${textRevealEffect}`}>
+				<div className={`gtb-gradient-text-wrraper ${textRevealEffect} ${hoverEffectClass}`}>
 					<RichText
 						className='gtb-gradient-text'
 						tagName={headingTag}

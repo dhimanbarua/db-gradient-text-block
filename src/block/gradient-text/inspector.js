@@ -21,6 +21,7 @@ import {
 	RangeControl,
 	TabPanel,
 	ToggleControl, 
+	SelectControl,
 } from '@wordpress/components';
 import { useState } from "@wordpress/element";
 import { __ } from '@wordpress/i18n';
@@ -48,6 +49,12 @@ const Inspector = ({ attributes, setAttributes }) => {
 		gtbBorder,
 		gtbBorderRadius,
 		showTextReveal,
+		textRevealBg,
+		textRevealGradient,
+		textRevealDelay,
+		textRevealDuration,
+		showHoverEffect,
+		hoverEffect,
 	} = attributes;
 
 	
@@ -95,8 +102,7 @@ const Inspector = ({ attributes, setAttributes }) => {
 													(tag, index) => (
 														<Button
 															key={index}
-															isSecondar={headingTag !== tag.value}
-															isPrimary={headingTag === tag.value}
+															variant={headingTag === tag.value ? 'primary' : 'secondary'}
 															onClick={() => 
 																setAttributes({headingTag:tag.value})
 															}
@@ -118,8 +124,7 @@ const Inspector = ({ attributes, setAttributes }) => {
 													(item, index) => (
 														<Button
 															key={index}
-															isSecondary={headingAlign === item.value}
-															isPrimary={headingAlign !== item.value}
+															variant={headingAlign === item.value ? 'secondary' : 'primary'}
 															onClick={() =>
 																setAttributes({headingAlign:item.value})
 															}
@@ -185,8 +190,7 @@ const Inspector = ({ attributes, setAttributes }) => {
 											].map(({ value, label }, index) => (
 												<Button
 													key={index}
-													isPrimary={colorSwitcher === value}
-													isSecondar={colorSwitcher !== value}
+													variant={colorSwitcher === value ? 'primary' : 'secondary'}
 													onClick={() => setColorSwitcher(value)}
 												>
 													{label}
@@ -254,8 +258,7 @@ const Inspector = ({ attributes, setAttributes }) => {
 												].map(({ value, label }, index) => (
 													<Button
 														key={index}
-														isPrimary={colorSwitcher === value}
-														isSecondar={colorSwitcher !== value}
+														variant={colorSwitcher === value ? 'primary' : 'secondary'}
 														onClick={() => setColorSwitcher(value)}
 													>
 														{label}
@@ -310,65 +313,129 @@ const Inspector = ({ attributes, setAttributes }) => {
 											checked={showTextReveal}
 											onChange={(nextValues) => setAttributes({showTextReveal: nextValues})}
 										/>
-																			
-										<BaseControl>
-										<ButtonGroup>
-											{[
-												{
-													label: __("Color", "db-gradient-text-block"),
-													value: "color",
-												},
-												{
-													label: __("Gradient", "db-gradient-text-block"),
-													value: "gradient",
-												}
-											].map(({ value, label }, index) => (
-												<Button
-													key={index}
-													isPrimary={colorSwitcher === value}
-													isSecondar={colorSwitcher !== value}
-													onClick={() => setColorSwitcher(value)}
-												>
-													{label}
-												</Button>
-											))}
-										</ButtonGroup>
-									</BaseControl>
-										{colorSwitcher === "color" && (
-											<ColorPalette
-												colors={[
-													{name: "red", color: "#f00"},
-													{name: "white", color: "#FFF"},
-													{name: "blue", color: "#00f"},
-												]}
-												value={textColor}
-												onChange={(value) => setAttributes({textColor: value})}
-											/>
+										{showTextReveal && (
+											<>
+												<BaseControl>
+													<ButtonGroup>
+														{[
+															{
+																label: __("Color", "db-gradient-text-block"),
+																value: "color",
+															},
+															{
+																label: __("Gradient", "db-gradient-text-block-reveal"),
+																value: "gradient",
+															}
+														].map(({ value, label }, index) => (
+															<Button
+																key={index}
+																variant={colorSwitcher === value ? 'primary' : 'secondary'}
+																onClick={() => setColorSwitcher(value)}
+															>
+																{label}
+															</Button>
+														))}
+													</ButtonGroup>
+												</BaseControl>
+												{colorSwitcher === "color" && (
+													<ColorPalette
+														colors={[
+															{name: "red", color: "#f00"},
+															{name: "white", color: "#FFF"},
+															{name: "blue", color: "#00f"},
+														]}
+														value={textRevealBg}
+														onChange={(value) => setAttributes({textRevealBg: value})}
+													/>
+												)}
+												{colorSwitcher === "gradient" && (
+													<GradientPicker
+														value={textRevealGradient}
+														onChange={(value) => setAttributes({ textRevealGradient: value })}
+														gradients={ [
+															{
+																name: 'JShine',
+																gradient:
+																	'linear-gradient(135deg,#12c2e9 0%,#c471ed 50%,#f64f59 100%)',
+																slug: 'jshine',
+															},
+															{
+																name: 'Moonlit Asteroid',
+																gradient:
+																	'linear-gradient(135deg,#0F2027 0%, #203A43 0%, #2c5364 100%)',
+																slug: 'moonlit-asteroid',
+															},
+															{
+																name: 'Rastafarie',
+																gradient:
+																	'linear-gradient(135deg,#1E9600 0%, #FFF200 0%, #FF0000 100%)',
+																slug: 'rastafari',
+															},
+														] }
+													/>
+												)}
+												<RangeControl
+													label={__("Reveal Delay (seconds)", "db-gradient-text-block")}
+													value={textRevealDelay}
+													onChange={(value) => setAttributes({textRevealDelay: value})}
+													min={0}
+													max={5}
+													step={0.1}
+												/>
+												<RangeControl
+													label={__("Reveal Duration (seconds)", "db-gradient-text-block")}
+													value={textRevealDuration}
+													onChange={(value) => setAttributes({textRevealDuration: value})}
+													min={0.1}
+													max={5}
+													step={0.1}
+												/>
+											</>
 										)}
-										{colorSwitcher === "gradient" && (
-											<GradientPicker
-												value={textGradient}
-												onChange={(value) => setAttributes({ textGradient: value })}
-												gradients={ [
-													{
-														name: 'JShine',
-														gradient:
-															'linear-gradient(135deg,#12c2e9 0%,#c471ed 50%,#f64f59 100%)',
-														slug: 'jshine',
-													},
-													{
-														name: 'Moonlit Asteroid',
-														gradient:
-															'linear-gradient(135deg,#0F2027 0%, #203A43 0%, #2c5364 100%)',
-														slug: 'moonlit-asteroid',
-													},
-													{
-														name: 'Rastafarie',
-														gradient:
-															'linear-gradient(135deg,#1E9600 0%, #FFF200 0%, #FF0000 100%)',
-														slug: 'rastafari',
-													},
-												] }
+									</PanelBody>
+									<PanelBody
+										title={__("Hover Effect", "db-gradient-text-block")}
+										initialOpen={false}
+									>
+										<ToggleControl
+											label={__("Show Hover Effect", "db-gradient-text-block")}
+											checked={showHoverEffect}
+											onChange={(nextValues) => setAttributes({showHoverEffect: nextValues})}
+										/>
+										{showHoverEffect && (
+											<SelectControl
+												label={ __( 'Hover Effect' ) }
+												value={ hoverEffect }
+												onChange={ ( nextValues ) => setAttributes({hoverEffect: nextValues}) }
+												options={ [
+													{ value: 'none', label: 'Select Hover Effect' },
+													{ value: 'grow', label: 'Grow' },
+													{ value: 'shrink', label: 'Shrink' },
+													{ value: 'pulse', label: 'Pulse' },
+													{ value: 'pulse-grow', label: 'Pluse Grow' },
+													{ value: 'pulse-shrink', label: 'Pulse Shrink' },
+													{ value: 'push', label: 'Push' },
+													{ value: 'pop', label: 'Pop' },
+													{ value: 'bounce-in', label: 'Bounce In' },
+													{ value: 'bounce-out', label: 'Bounce Out' },
+													{ value: 'rotate', label: 'Rotate' },
+													{ value: 'grow-rotate', label: 'Grow Rotate' },
+													{ value: 'float', label: 'Float' },
+													{ value: 'sink', label: 'Sink' },
+													{ value: 'bob', label: 'Bob' },
+													{ value: 'hang', label: 'Hang' },
+													{ value: 'skew', label: 'Skew' },
+													{ value: 'skew-forward', label: 'Skew Forward' },
+													{ value: 'skew-backward', label: 'Skew Backward' },
+													{ value: 'wobble-vertical', label: 'Wobble Vertical' },
+													{ value: 'wobble-horizontal', label: 'Wobble Horizontal' },
+													{ value: 'wobble-to-bottom-right', label: 'Wobble to Bottom Right' },
+													{ value: 'wobble-to-top-right', label: 'Wobble to Top Right' },
+													{ value: 'wobble-skew', label: 'Wobble Skew' },
+													{ value: 'buzz', label: 'Buzz' },
+													{ value: 'buzz-out', label: 'Buzz Out' },
+													{ value: 'forward', label: 'Forward' },
+												]}
 											/>
 										)}
 									</PanelBody>
