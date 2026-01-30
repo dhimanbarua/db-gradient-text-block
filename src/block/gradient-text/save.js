@@ -8,7 +8,18 @@ import { RichText, useBlockProps } from '@wordpress/block-editor';
  */
 
 export default function save({ attributes }) {
-	const { uniqueId, content, headingTag, showTextReveal, textRevealDelay, textRevealDuration, showHoverEffect, hoverEffect} = attributes;
+	const {
+		uniqueId,
+		content,
+		headingTag,
+		showTextReveal,
+		textRevealDelay,
+		textRevealDuration,
+		showHoverEffect,
+		hoverEffect,
+		showTextMask,
+		textMaskMediaUrl,
+	} = attributes;
 
 	// Block Props
 	const blockProps = useBlockProps.save({
@@ -28,7 +39,11 @@ export default function save({ attributes }) {
 
 	return (
 		<div {...blockProps}>
-			<div className={`gtb-gradient-text-wrraper ${textRevealEffect} ${hoverEffectClass}`} style={revealStyles} >
+			<div
+				className={`gtb-gradient-text-wrraper ${textRevealEffect} ${hoverEffectClass}`}
+				style={revealStyles}
+				data-text-mask={showTextMask && textMaskMediaUrl ? '1' : '0'}
+			>
 				<RichText.Content
 					className='gtb-gradient-text'
 					tagName={headingTag}

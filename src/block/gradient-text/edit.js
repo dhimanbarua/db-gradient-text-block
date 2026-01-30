@@ -3,6 +3,8 @@
  */
 import { RichText, useBlockProps } from '@wordpress/block-editor';
 import { Fragment, useEffect } from "@wordpress/element";
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { gsap } from 'gsap';
 
 // editor style
 import './editor.scss';
@@ -26,6 +28,11 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 		headingAlign,
 		textColor,
 		textGradient,
+		showTextMask,
+		textMaskMediaUrl,
+		textMaskSize,
+		textMaskPosition,
+		textMaskRepeat,
 		textBodyBg,
 		textBodyGradient,
 		textFontSize,
@@ -59,6 +66,19 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 		}
 	}, []);
 
+	// GSAP: animate masked text background position
+	useEffect(() => {
+		if (!showTextMask || !textMaskMediaUrl || !uniqueId) return;
+
+		const el = document.querySelector(`.${uniqueId} .gtb-gradient-text`);
+		if (!el) return;
+
+		const tl = gsap.timeline({ repeat: -1 });
+		tl.to(el, { duration: 30, backgroundPosition: '-960px 0px', ease: 'none' });
+
+		return () => tl.kill();
+	}, [showTextMask, textMaskMediaUrl, uniqueId]);
+
 	// Block Props
 	const blockProps = useBlockProps({
 		className: uniqueId,
@@ -85,9 +105,24 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 			text-transform: ${textTransform};
 			letter-spacing: ${letterSpacing};
 			line-height: ${lineHeight};
-			color: ${textColor};
-			background: ${textGradient};
-			${textGradient ? `-webkit-background-clip: text;-webkit-text-fill-color: transparent;` : ''}};
+			${
+				showTextMask && textMaskMediaUrl
+					? `
+				color: transparent;
+				background-image: url('${textMaskMediaUrl}');
+				background-size: ${textMaskSize};
+				background-position: ${textMaskPosition};
+				background-repeat: ${textMaskRepeat};
+				-webkit-background-clip: text;
+				background-clip: text;
+				-webkit-text-fill-color: transparent;
+			`
+					: `
+				color: ${textColor};
+				background: ${textGradient};
+				${textGradient ? `-webkit-background-clip: text;background-clip: text;-webkit-text-fill-color: transparent;color: transparent;` : ''}
+			`
+			}
 			${showVerticalText && verticalTextPosition === 'top-to-bottom' ? `writing-mode: vertical-rl; text-orientation: mixed;` : ''}
 			${showVerticalText && verticalTextPosition === 'bottom-to-top' ? `writing-mode: vertical-rl; text-orientation: mixed; transform: rotate(180deg);` : ''}
 		}

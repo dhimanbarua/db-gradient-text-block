@@ -24,6 +24,30 @@ const attributes = {
 		type: "string",
 		default: "linear-gradient(135deg,rgba(252,185,0,1) 0%,rgba(255,105,0,1) 100%)"
 	},
+	showTextMask: {
+		type: "boolean",
+		default: false,
+	},
+	textMaskMediaId: {
+		type: "number",
+		default: 0,
+	},
+	textMaskMediaUrl: {
+		type: "string",
+		default: "",
+	},
+	textMaskSize: {
+		type: "string",
+		default: "cover",
+	},
+	textMaskPosition: {
+		type: "string",
+		default: "center center",
+	},
+	textMaskRepeat: {
+		type: "string",
+		default: "no-repeat",
+	},
 	textBodyBg: {
 		type: "string",
 	},

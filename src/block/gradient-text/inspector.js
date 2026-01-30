@@ -4,6 +4,8 @@
 import {
 	FontSizePicker,
 	InspectorControls,
+	MediaUpload,
+	MediaUploadCheck,
 	__experimentalLetterSpacingControl as LetterSpacingControl,
 	LineHeightControl,
 	__experimentalTextDecorationControl as TextDecorationControl,
@@ -37,6 +39,12 @@ const Inspector = ({ attributes, setAttributes }) => {
 		headingAlign,
 		textGradient,
 		textColor,
+		showTextMask,
+		textMaskMediaId,
+		textMaskMediaUrl,
+		textMaskSize,
+		textMaskPosition,
+		textMaskRepeat,
 		textBodyBg,
 		textBodyGradient,
 		textFontSize,
@@ -302,6 +310,101 @@ const Inspector = ({ attributes, setAttributes }) => {
 													},
 												] }
 											/>
+										)}
+									</PanelBody>
+									<PanelBody
+										title={__("Text Mask", "db-gradient-text-block")}
+										initialOpen={false}
+									>
+										<ToggleControl
+											label={__("Enable Text Mask", "db-gradient-text-block")}
+											checked={showTextMask}
+											onChange={(nextValue) => setAttributes({ showTextMask: nextValue })}
+										/>
+
+										{showTextMask && (
+											<>
+												<MediaUploadCheck>
+													<MediaUpload
+														onSelect={(media) =>
+															setAttributes({
+																textMaskMediaId: media?.id || 0,
+																textMaskMediaUrl: media?.url || "",
+															})
+														}
+														allowedTypes={["image"]}
+														value={textMaskMediaId}
+														render={({ open }) => (
+															<div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+																<Button variant="secondary" onClick={open}>
+																	{textMaskMediaUrl
+																		? __("Replace Mask Image", "db-gradient-text-block")
+																		: __("Select Mask Image", "db-gradient-text-block")}
+																</Button>
+																{textMaskMediaUrl && (
+																	<Button
+																		variant="tertiary"
+																		onClick={() =>
+																			setAttributes({
+																				textMaskMediaId: 0,
+																				textMaskMediaUrl: "",
+																			})
+																		}
+																	>
+																		{__("Remove", "db-gradient-text-block")}
+																	</Button>
+																)}
+															</div>
+														)}
+													/>
+												</MediaUploadCheck>
+
+												{textMaskMediaUrl && (
+													<div style={{ marginTop: 10 }}>
+														<img
+															src={textMaskMediaUrl}
+															alt=""
+															style={{ maxWidth: "100%", height: "auto", borderRadius: 4 }}
+														/>
+													</div>
+												)}
+
+												<SelectControl
+													label={__("Mask Size", "db-gradient-text-block")}
+													value={textMaskSize}
+													onChange={(value) => setAttributes({ textMaskSize: value })}
+													options={[
+														{ label: __("Cover", "db-gradient-text-block"), value: "cover" },
+														{ label: __("Contain", "db-gradient-text-block"), value: "contain" },
+														{ label: __("Auto", "db-gradient-text-block"), value: "auto" },
+													]}
+												/>
+
+												<SelectControl
+													label={__("Mask Position", "db-gradient-text-block")}
+													value={textMaskPosition}
+													onChange={(value) => setAttributes({ textMaskPosition: value })}
+													options={[
+														{ label: __("Center", "db-gradient-text-block"), value: "center center" },
+														{ label: __("Top", "db-gradient-text-block"), value: "top center" },
+														{ label: __("Bottom", "db-gradient-text-block"), value: "bottom center" },
+														{ label: __("Left", "db-gradient-text-block"), value: "center left" },
+														{ label: __("Right", "db-gradient-text-block"), value: "center right" },
+													]}
+												/>
+
+												<SelectControl
+													label={__("Mask Repeat", "db-gradient-text-block")}
+													value={textMaskRepeat}
+													onChange={(value) => setAttributes({ textMaskRepeat: value })}
+													options={[
+														{ label: __("No Repeat", "db-gradient-text-block"), value: "no-repeat" },
+														{ label: __("Repeat", "db-gradient-text-block"), value: "repeat" },
+														{ label: __("Repeat X", "db-gradient-text-block"), value: "repeat-x" },
+														{ label: __("Repeat Y", "db-gradient-text-block"), value: "repeat-y" },
+													]}
+												/>
+											</>
 										)}
 									</PanelBody>
 									<PanelBody
