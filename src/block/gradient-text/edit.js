@@ -109,6 +109,7 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 				showTextMask && textMaskMediaUrl
 					? `
 				color: transparent;
+				background-attachment: fixed;
 				background-image: url('${textMaskMediaUrl}');
 				background-size: ${textMaskSize};
 				background-position: ${textMaskPosition};
